@@ -1,0 +1,13 @@
+$card-width: 350px;
+$card-height: 250px;
+$card-gap: 30px;
+$column-count: 3;
+$break-columns: 1129px;
+$break-small: 730px;
+
+@mixin displayFlex ($direction, $justify-content, $align-items, $wrap) {
+    display: flex;
+    flex-flow: $direction $wrap;
+    justify-content: $justify-content;
+    align-items: $align-items;
+}

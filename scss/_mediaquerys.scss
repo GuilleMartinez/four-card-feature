@@ -1,0 +1,17 @@
+.card-deck {
+
+    @media (max-width: $break-columns) {
+        max-width: ($card-width + $card-gap) * ($column-count - 1);
+    }
+
+    @media (max-width: $break-small) {
+        max-width: max-content;
+    }
+
+}
+
+.col-1, .col-3 {
+    @media (max-width: $break-columns) {
+            grid-row: span 1;
+    }
+}

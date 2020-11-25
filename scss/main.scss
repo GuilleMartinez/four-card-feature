@@ -9,19 +9,14 @@
 
 html {
     box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-
 
 }
 
-*,
-*::before,
-*::after {
-    box-sizing: inherit;
-    padding: inherit;
-    margin: inherit;
-}
+$card-width: 350px;
+$card-height: 250px;
+$card-gap: 30px;
+$column-count: 3;
+$break-column: 1100px;
 
 @mixin displayFlex ($direction, $justify-content, $align-items, $wrap) {
     display: flex;
@@ -30,27 +25,68 @@ html {
     align-items: $align-items;
 }
 
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+    padding: 0;
+    margin: 0;
+    height: min-content;
+}
+
+
 .card-deck {
-    @include displayFlex(row, space-around, center, wrap);
-    max-width: 1140px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min-content, $card-width));
+    grid-template-rows: repeat(2, $card-height);
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
     margin: 0 auto;
+    max-width: ($card-width + $card-gap) * $column-count;
 
-
-    .col {
-        @include displayFlex(column, space-around, center, nowrap );
-        width: 350px;
-        height: 560px;
-        border: 1px solid;
+    @media (max-width: $break-column) {
+        max-width: ($card-width + $card-gap) * ($column-count - 1);
     }
 
+    .col {
+        width: 350px;
+        grid-row: span 2;
+    }
+
+    .col-1,
+    .col-3 {
+        height: 100%;
+        @include displayFlex(column, center, center, nowrap);
+
+        @media (max-width: $break-column) {
+            grid-row: span 1;
+        }
+    }
+
+    .col-2 {
+        height: ($card-height * 2) + $card-gap;
+        @include displayFlex(column, space-between, center, nowrap);
+    }
+
+
+
     .card {
-        text-align: center;
-        @include displayFlex(row, space-evenly, center, wrap );
+        @include displayFlex(column, initial, center, nowrap);
         width: 100%;
         height: 250px;
+        padding: 20px;
+        border: 1px solid;
+        position: relative;
 
         .card-img {
-            align-self: flex-end;
+            position: absolute;
+            left: $card-width - 94;
+            top: $card-height - 94;
+        }
+
+        .card-title {
+            margin-bottom: 15px;
         }
     }
 
