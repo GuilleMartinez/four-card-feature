@@ -1,0 +1,58 @@
+.attribution {
+    font-size: 11px;
+    text-align: center;
+
+    a {
+        color: hsl(228, 45%, 44%);
+    }
+}
+
+html {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+
+
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+    padding: inherit;
+    margin: inherit;
+}
+
+@mixin displayFlex ($direction, $justify-content, $align-items, $wrap) {
+    display: flex;
+    flex-flow: $direction $wrap;
+    justify-content: $justify-content;
+    align-items: $align-items;
+}
+
+.card-deck {
+    @include displayFlex(row, space-around, center, wrap);
+    max-width: 1140px;
+    margin: 0 auto;
+
+
+    .col {
+        @include displayFlex(column, space-around, center, nowrap );
+        width: 350px;
+        height: 560px;
+        border: 1px solid;
+    }
+
+    .card {
+        text-align: center;
+        @include displayFlex(row, space-evenly, center, wrap );
+        width: 100%;
+        height: 250px;
+
+        .card-img {
+            align-self: flex-end;
+        }
+    }
+
+
+}
