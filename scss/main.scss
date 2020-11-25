@@ -1,28 +1,9 @@
-.attribution {
-    font-size: 11px;
-    text-align: center;
-
-    a {
-        color: hsl(228, 45%, 44%);
-    }
-}
+@import "variables";
+@import "typography";
 
 html {
     box-sizing: border-box;
 
-}
-
-$card-width: 350px;
-$card-height: 250px;
-$card-gap: 30px;
-$column-count: 3;
-$break-column: 1100px;
-
-@mixin displayFlex ($direction, $justify-content, $align-items, $wrap) {
-    display: flex;
-    flex-flow: $direction $wrap;
-    justify-content: $justify-content;
-    align-items: $align-items;
 }
 
 *,
@@ -35,22 +16,40 @@ $break-column: 1100px;
 }
 
 
-.card-deck {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min-content, $card-width));
-    grid-template-rows: repeat(2, $card-height);
-    gap: 30px;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    max-width: ($card-width + $card-gap) * $column-count;
+main {
+    padding-top: $sectionGap / 2;
+    padding-bottom: $sectionGap;
+}
 
-    @media (max-width: $break-column) {
-        max-width: ($card-width + $card-gap) * ($column-count - 1);
+.titles {
+    margin-bottom: $sectionGap;
+
+    .main-title {
+        margin-bottom: $marginTitle;
+    }
+
+    .secondary-title {
+        margin-bottom: $marginTitle * 2;
+    }
+
+    .info-title {
+        margin: 0 auto;
+        width: 75%;
+    }
+}
+
+
+.card-deck {
+    @include displayGrid(auto-fit, minmax(min-content, $cardWidth), 2, $cardHeight, center, center, $cardGap, $cardGap);
+    margin: 0 auto;
+    max-width: ($cardWidth + $cardGap) * $colCount;
+
+    @media (max-width: $breakColumn) {
+        max-width: ($cardWidth + $cardGap) * ($colCount - 1);
     }
 
     .col {
-        width: 350px;
+        width: $cardWidth;
         grid-row: span 2;
     }
 
@@ -59,36 +58,76 @@ $break-column: 1100px;
         height: 100%;
         @include displayFlex(column, center, center, nowrap);
 
-        @media (max-width: $break-column) {
+        @media (max-width: $breakColumn) {
             grid-row: span 1;
         }
     }
 
     .col-2 {
-        height: ($card-height * 2) + $card-gap;
+        height: ($cardHeight * 2) + $cardGap;
         @include displayFlex(column, space-between, center, nowrap);
     }
 
 
 
     .card {
-        @include displayFlex(column, initial, center, nowrap);
+        @include displayFlex(column, space-between, center, nowrap);
         width: 100%;
-        height: 250px;
-        padding: 20px;
-        border: 1px solid;
+        height: $cardHeight;
+        padding: $cardGap - 10;
         position: relative;
+        border-width: 7px 1px 1px 1px;
+        border-style: solid;
+        border-color: transparent;
+        border-radius: 5px;
+        box-shadow: 0 5px 20px rgba($color: #000000, $alpha: 0.2);
 
-        .card-img {
-            position: absolute;
-            left: $card-width - 94;
-            top: $card-height - 94;
+        .card-footer,
+        .card-body {
+            width: 100%;
+        }
+
+        .card-footer {
+
+            height: $imgHeight;
+
+            .card-img {
+                margin-left: $cardWidth - ($cardGap * 2) - $imgHeight;
+            }
+
         }
 
         .card-title {
-            margin-bottom: 15px;
+            margin-bottom: $marginTitle - 10;
         }
+
+        &.supervisor {
+            @extend .card;
+            border-top-color: $cyan;
+
+        }
+
+        &.team-builder {
+            @extend .card;
+            border-top-color: $red;
+        }
+
+        &.calculator {
+            @extend .card;
+            border-top-color: $blue;
+        }
+
+        &.karma {
+            @extend .card;
+            border-top-color: $orange;
+        }
+
     }
 
 
+}
+
+footer {
+    @include displayFlex(column, center, center, nowrap);
+    height: $sectionGap / 2;
 }
